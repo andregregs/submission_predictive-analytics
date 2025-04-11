@@ -344,7 +344,7 @@ Untuk mengevaluasi performa model dalam memprediksi penyakit jantung, beberapa m
 
 ### 1. Confusion Matrix
 
-![Confusion Matrix](https://example.com/images/confusion_matrix.png)
+![Confusion Matrix](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/confusion_matrix.png)
 
 Confusion matrix memberikan gambaran visual tentang prediksi model dibandingkan dengan nilai sebenarnya:
 - True Positive (TP): Jumlah pasien dengan penyakit jantung yang diprediksi benar
@@ -366,7 +366,7 @@ Berikut adalah hasil evaluasi model Random Forest yang telah dituning:
 
 ### 3. ROC Curve
 
-![ROC Curve](https://example.com/images/roc_curve.png)
+![ROC Curve](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/ROC_curve.png)
 
 ROC Curve (Receiver Operating Characteristic Curve) memplot True Positive Rate (Sensitivity) terhadap False Positive Rate (1-Specificity) pada berbagai threshold. Area Under the Curve (AUC) mengukur kemampuan model untuk membedakan antara kelas positif dan negatif, dengan nilai dari 0.5 (tidak lebih baik dari random) hingga 1.0 (sempurna).
 
@@ -374,7 +374,7 @@ Model Random Forest final mencapai AUC 0.92, menunjukkan kemampuan diskriminasi 
 
 ### 4. Feature Importance
 
-![Feature Importance](https://example.com/images/feature_importance.png)
+![Feature Importance](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/feature_importance.png)
 
 Analisis feature importance dari model Random Forest menunjukkan bahwa lima fitur teratas yang berkontribusi pada prediksi penyakit jantung adalah:
 1. **cp** (tipe nyeri dada): 0.25
