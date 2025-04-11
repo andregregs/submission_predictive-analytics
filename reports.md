@@ -111,13 +111,13 @@ Untuk memahami lebih dalam tentang dataset, dilakukan beberapa analisis eksplora
 
 #### 1. Distribusi Kelas Target
 
-![Distribusi Kelas Target](https://example.com/images/target_distribution.png)
+![Distribusi Kelas Target](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/distribusi.png)
 
 Dari visualisasi di atas, dapat diamati bahwa distribusi kelas dalam dataset cukup seimbang, dengan sekitar 54% pasien didiagnosis dengan penyakit jantung (kelas 1) dan 46% tidak memiliki penyakit jantung (kelas 0). Keseimbangan ini baik untuk model klasifikasi karena mengurangi risiko bias dalam prediksi.
 
 #### 2. Korelasi Antar Fitur
 
-![Korelasi Antar Fitur](https://example.com/images/correlation_matrix.png)
+![Korelasi Antar Fitur](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/korelasi_antarfitur.png)
 
 Dari matriks korelasi, beberapa insight penting yang diperoleh:
 - Terdapat korelasi negatif yang kuat antara `thalach` (detak jantung maksimum) dan `age` (usia), menunjukkan bahwa detak jantung maksimum cenderung menurun dengan bertambahnya usia.
@@ -126,8 +126,7 @@ Dari matriks korelasi, beberapa insight penting yang diperoleh:
 
 #### 3. Distribusi Fitur Numerik Berdasarkan Target
 
-![Distribusi Usia](https://example.com/images/age_distribution.png)
-![Distribusi Kolesterol](https://example.com/images/cholesterol_distribution.png)
+![Distribusi Usia dan Kolestrol](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/fitur_numerik.png)
 
 Analisis distribusi fitur numerik berdasarkan target menunjukkan beberapa pola:
 - Pasien dengan penyakit jantung cenderung memiliki usia yang lebih tinggi.
@@ -136,8 +135,7 @@ Analisis distribusi fitur numerik berdasarkan target menunjukkan beberapa pola:
 
 #### 4. Analisis Fitur Kategorikal
 
-![Analisis Sex](https://example.com/images/sex_analysis.png)
-![Analisis CP](https://example.com/images/cp_analysis.png)
+![Analisis Sex dan CP](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/fitur_kategorikal.png)
 
 Analisis fitur kategorikal memberikan insight berikut:
 - Pria (sex=1) memiliki prevalensi penyakit jantung yang lebih tinggi dibandingkan wanita dalam dataset ini.
