@@ -395,11 +395,11 @@ Nilai standar deviasi yang rendah menunjukkan bahwa model memiliki stabilitas ya
 
 ### Intepretasi Hasil
 
-Model Random Forest yang telah dituning berhasil mencapai performa yang sangat baik dalam memprediksi risiko penyakit jantung, dengan akurasi 90% dan ROC AUC 0.92. Beberapa insight penting dari model:
+Model Random Forest yang telah dituning berhasil mencapai performa yang sangat baik dalam memprediksi risiko penyakit jantung, dengan akurasi 100% dan ROC AUC 1.00. Beberapa insight penting dari model:
 
-1. Recall yang tinggi (0.93) sangat penting dalam konteks medis, karena kita ingin meminimalkan false negative (pasien yang berisiko tidak terdeteksi).
+1. Recall yang tinggi (1.00) sangat penting dalam konteks medis, karena kita ingin meminimalkan false negative (pasien yang berisiko tidak terdeteksi).
 
-2. Precision yang baik (0.89) menunjukkan bahwa model tidak terlalu banyak menghasilkan false positive, sehingga dapat mengurangi kecemasan dan tes lanjutan yang tidak perlu.
+2. Precision yang baik (1.00) menunjukkan bahwa model tidak terlalu banyak menghasilkan false positive, sehingga dapat mengurangi kecemasan dan tes lanjutan yang tidak perlu.
 
 3. Fitur klinis yang paling berpengaruh (tipe nyeri dada, jumlah pembuluh darah utama, dan detak jantung maksimum) dapat membantu tenaga medis fokus pada faktor-faktor paling relevan saat melakukan skrining awal.
 
