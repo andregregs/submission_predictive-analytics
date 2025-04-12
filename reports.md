@@ -333,7 +333,7 @@ Setelah proses tuning, kombinasi parameter terbaik ditemukan:
 - min_samples_leaf: 1
 
 Model Random Forest yang telah dituning ini dipilih sebagai model final karena:
-1. Mencapai ROC-AUC tertinggi (0.91) dibandingkan model lainnya
+1. Mencapai ROC-AUC tertinggi (1.00) dibandingkan model lainnya
 2. Memiliki keseimbangan yang baik antara precision dan recall
 3. Menunjukkan stabilitas performa yang baik dalam cross-validation
 4. Menyediakan feature importance yang dapat diinterpretasi
