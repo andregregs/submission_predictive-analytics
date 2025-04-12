@@ -358,11 +358,11 @@ Berikut adalah hasil evaluasi model Random Forest yang telah dituning:
 
 | Metrik    | Nilai   | Formula                     | Penjelasan                                                   |
 |-----------|---------|-----------------------------|------------------------------------------------------------|
-| Accuracy  | 0.90    | (TP + TN) / (TP + TN + FP + FN) | Proporsi prediksi yang benar dari total prediksi             |
-| Precision | 0.89    | TP / (TP + FP)              | Proporsi positif benar dari semua yang diprediksi positif    |
-| Recall    | 0.93    | TP / (TP + FN)              | Proporsi positif benar dari semua yang sebenarnya positif    |
-| F1 Score  | 0.91    | 2 * (Precision * Recall) / (Precision + Recall) | Rata-rata harmonik dari precision dan recall |
-| ROC AUC   | 0.92    | Area Under ROC Curve        | Kemampuan model membedakan antara kelas positif dan negatif  |
+| Accuracy  | 1.00    | (TP + TN) / (TP + TN + FP + FN) | Proporsi prediksi yang benar dari total prediksi             |
+| Precision | 1.00    | TP / (TP + FP)              | Proporsi positif benar dari semua yang diprediksi positif    |
+| Recall    | 1.00    | TP / (TP + FN)              | Proporsi positif benar dari semua yang sebenarnya positif    |
+| F1 Score  | 1.00    | 2 * (Precision * Recall) / (Precision + Recall) | Rata-rata harmonik dari precision dan recall |
+| ROC AUC   | 1.00    | Area Under ROC Curve        | Kemampuan model membedakan antara kelas positif dan negatif  |
 
 ### 3. ROC Curve
 
