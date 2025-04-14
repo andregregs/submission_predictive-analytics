@@ -415,13 +415,23 @@ Berikut adalah perbandingan performa semua model yang diuji:
 
 | Model               | Accuracy | Precision | Recall | F1 Score | ROC AUC |
 |---------------------|----------|-----------|--------|----------|---------|
-| Logistic Regression | 0.88     | 0.89      | 0.87   | 0.88     | 0.93    |
-| Random Forest       | 0.95     | 0.94      | 0.96   | 0.95     | 0.99    |
-| Gradient Boosting   | 0.93     | 0.92      | 0.94   | 0.93     | 0.98    |
-| SVM                 | 0.87     | 0.88      | 0.86   | 0.87     | 0.91    |
-| Random Forest (Tuned) | 1.00   | 1.00      | 1.00   | 1.00     | 1.00    |
+| Logistic Regression | 0.873171 | 0.855856  | 0.904762 | 0.879630 | 0.944476 |
+| Random Forest       | 1.000000 | 1.000000  | 1.000000 | 1.000000 | 1.000000 |
+| Gradient Boosting   | 0.990244 | 0.981308  | 1.000000 | 0.990566 | 0.993143 |
+| SVM                 | 0.951220 | 0.935780  | 0.971429 | 0.953271 | 0.977333 |
+| Random Forest (Tuned) | 1.000000 | 1.000000 | 1.000000 | 1.000000 | 1.000000 |
 
-Dari perbandingan di atas, dapat dilihat bahwa model Random Forest yang telah dituning mengungguli semua model lainnya di semua metrik evaluasi.
+Dari perbandingan di atas, dapat dilihat bahwa:
+
+1. **Random Forest**, baik dengan parameter default maupun setelah tuning, mencapai performa sempurna di semua metrik evaluasi, menunjukkan kemampuan klasifikasi yang sangat akurat untuk dataset ini.
+
+2. **Gradient Boosting** juga menunjukkan performa yang sangat baik dengan accuracy 99.02% dan recall sempurna 100%, yang berarti model ini tidak menghasilkan false negative (semua pasien dengan penyakit jantung berhasil diidentifikasi).
+
+3. **SVM** memberikan hasil yang baik dengan accuracy 95.12% dan recall 97.14%, menunjukkan bahwa SVM dengan kernel yang sesuai dapat menangkap pola kompleks dalam data.
+
+4. **Logistic Regression**, meskipun memiliki performa terendah di antara model yang diuji, tetap memberikan hasil yang cukup baik dengan accuracy 87.32% dan ROC AUC 94.45%, menunjukkan bahwa bahkan model linear sederhana dapat menangkap sinyal penting dalam data.
+
+Random Forest dipilih sebagai model final karena performa sempurnanya dan kemampuannya menyediakan feature importance untuk interpretasi hasil. Perlu dicatat bahwa performa sempurna 100% ini perlu dievaluasi lebih lanjut dengan cross-validation untuk memastikan model tidak overfitting terhadap data testing.
 
 ### Hubungan Hasil Evaluasi dengan Business Understanding
 
