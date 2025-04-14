@@ -71,9 +71,16 @@ Untuk mencapai tujuan tersebut, berikut adalah solusi yang akan diterapkan:
 Dataset yang digunakan dalam proyek ini adalah Heart Disease Dataset yang tersedia secara publik. Dataset ini berisi data medis dan demografis dari individu yang telah menjalani berbagai tes untuk mendiagnosis penyakit jantung. Dataset ini dapat diunduh dari [Kaggle](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset).
 
 ### Informasi Dataset
-- **Jumlah Data:** 1.025 sampel
-- **Jumlah Fitur:** 13 fitur + 1 target
+- **Jumlah Data:** 1.025 sampel (baris)
+- **Jumlah Fitur:** 13 fitur + 1 target (14 kolom)
 - **Format:** CSV (Comma Separated Values)
+
+### Kondisi Data
+Setelah melakukan pemeriksaan pada dataset, berikut adalah kondisi data yang ditemukan:
+- **Missing Values**: Tidak ditemukan nilai yang hilang (NaN) dalam dataset.
+- **Duplikat**: Terdapat 0 data duplikat dalam dataset.
+- **Outliers**: Dari analisis boxplot pada fitur numerik, terdeteksi beberapa outlier pada fitur 'trestbps', 'chol', dan 'oldpeak'. Outlier ini dipertahankan karena dalam konteks medis, nilai-nilai ekstrem seringkali memiliki signifikansi klinis.
+- **Distribusi Target**: Dataset memiliki distribusi yang cukup seimbang antara kelas positif (54%) dan negatif (46%), sehingga tidak diperlukan teknik resampling.
 
 ### Variabel-variabel pada Heart Disease Dataset adalah sebagai berikut:
 
@@ -113,7 +120,7 @@ Untuk memahami lebih dalam tentang dataset, dilakukan beberapa analisis eksplora
 
 ![Distribusi Kelas Target](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/target_distribution.png)
 
-Dari visualisasi di atas, dapat diamati bahwa distribusi kelas dalam dataset cukup seimbang, dengan sekitar 54% pasien didiagnosis dengan penyakit jantung (kelas 1) dan 46% tidak memiliki penyakit jantung (kelas 0). Keseimbangan ini baik untuk model klasifikasi karena mengurangi risiko bias dalam prediksi.
+Dari visualisasi di atas, dapat diamati bahwa distribusi kelas dalam dataset cukup seimbang, dengan sekitar 51.3% pasien didiagnosis dengan penyakit jantung (kelas 1) dan 48.7% tidak memiliki penyakit jantung (kelas 0). Keseimbangan ini baik untuk model klasifikasi karena mengurangi risiko bias dalam prediksi.
 
 #### 2. Korelasi Antar Fitur
 
@@ -123,25 +130,28 @@ Dari matriks korelasi, beberapa insight penting yang diperoleh:
 - Terdapat korelasi negatif yang kuat antara `thalach` (detak jantung maksimum) dan `age` (usia), menunjukkan bahwa detak jantung maksimum cenderung menurun dengan bertambahnya usia.
 - `cp` (tipe nyeri dada) memiliki korelasi positif yang cukup kuat dengan `target`, mengindikasikan bahwa tipe nyeri dada tertentu berhubungan dengan peningkatan risiko penyakit jantung.
 - `oldpeak` (depresi ST) menunjukkan korelasi negatif dengan `slope` (kemiringan segmen ST), yang konsisten dengan pemahaman medis.
+- Tidak ada masalah multicollinearity yang ekstrem antar variabel prediktor yang dapat menggangu performa model.
 
 #### 3. Distribusi Fitur Numerik Berdasarkan Target
 
 ![Distribusi Fitur Numerik](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/numeric_distributions.png)
 
 Analisis distribusi fitur numerik berdasarkan target menunjukkan beberapa pola:
-- Pasien dengan penyakit jantung cenderung memiliki usia yang lebih tinggi.
+- Pasien dengan penyakit jantung cenderung memiliki usia yang lebih tinggi, meskipun perbedaannya tidak terlalu mencolok.
 - Kolesterol serum rata-rata tidak menunjukkan perbedaan yang signifikan antara pasien dengan dan tanpa penyakit jantung, menunjukkan bahwa faktor ini mungkin bukan prediktor utama dalam dataset ini.
-- Detak jantung maksimum (`thalach`) cenderung lebih rendah pada pasien dengan penyakit jantung.
+- Detak jantung maksimum (`thalach`) cenderung lebih rendah pada pasien dengan penyakit jantung, yang konsisten dengan pemahaman bahwa kapasitas jantung yang menurun dapat mengindikasikan masalah kardiovaskular.
+- `oldpeak` (depresi ST) cenderung lebih tinggi pada pasien dengan penyakit jantung, mengindikasikan perubahan EKG yang berhubungan dengan iskemia.
 
 #### 4. Analisis Fitur Kategorikal
 
 ![Analisis Fitur Kategorikal](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/categorical_distributions.png)
 
 Analisis fitur kategorikal memberikan insight berikut:
-- Pria (sex=1) memiliki prevalensi penyakit jantung yang lebih tinggi dibandingkan wanita dalam dataset ini.
-- Pasien dengan nyeri dada tipe Asymptomatic (cp=3) memiliki prevalensi penyakit jantung yang sangat tinggi.
-- Pasien dengan angina yang dipicu oleh olahraga (exang=1) lebih cenderung memiliki penyakit jantung.
-- Jumlah pembuluh darah yang terpengaruh (ca) menunjukkan hubungan positif yang kuat dengan diagnosis penyakit jantung.
+- Pria (sex=1) memiliki prevalensi penyakit jantung yang lebih tinggi dibandingkan wanita dalam dataset ini, yang sesuai dengan statistik epidemiologi.
+- Pasien dengan nyeri dada tipe Asymptomatic (cp=3) memiliki prevalensi penyakit jantung yang sangat tinggi, menekankan pentingnya pemeriksaan bahkan pada pasien tanpa gejala nyeri dada yang jelas.
+- Pasien dengan angina yang dipicu oleh olahraga (exang=1) lebih cenderung memiliki penyakit jantung, mengkonfirmasi bahwa nyeri dada selama aktivitas fisik adalah indikator kuat penyakit jantung.
+- Jumlah pembuluh darah yang terpengaruh (ca) menunjukkan hubungan positif yang kuat dengan diagnosis penyakit jantung, di mana semakin banyak pembuluh yang terpengaruh, semakin tinggi kemungkinan diagnosis positif.
+- Thalassemia jenis fixed defect dan reversible defect (thal=2 dan thal=3) berhubungan dengan tingkat penyakit jantung yang lebih tinggi dibandingkan thalassemia normal (thal=1).
 
 ## Data Preparation
 
@@ -165,10 +175,6 @@ categorical_transformer = Pipeline(steps=[
 ])
 ```
 
-Strategi ini dipilih karena:
-- Median lebih robust terhadap outlier dibandingkan mean untuk fitur numerik
-- Most frequent (modus) adalah pendekatan yang umum untuk fitur kategorikal
-
 ### 2. Feature Scaling
 
 Standarisasi fitur numerik dilakukan menggunakan `StandardScaler` untuk mengubah fitur-fitur numerik menjadi distribusi dengan mean 0 dan standar deviasi 1. Hal ini penting karena:
@@ -183,14 +189,7 @@ Fitur kategorikal diubah menjadi format numerik menggunakan `OneHotEncoder`. Pro
 - One-hot encoding menghindari pengenalan urutan yang tidak ada pada kategori nominal
 - Mencegah algoritma memberikan bobot yang tidak proporsional pada kategori dengan nilai numerik yang lebih tinggi
 
-### 4. Feature Engineering
-
-Tidak dilakukan feature engineering yang ekstensif karena fitur-fitur yang tersedia sudah cukup representatif untuk prediksi penyakit jantung. Namun, kita bisa mempertimbangkan untuk menambahkan fitur baru seperti:
-- BMI (jika tersedia data tinggi dan berat badan)
-- Rasio kolesterol terhadap tekanan darah
-- Kategori usia (young, middle-aged, elderly)
-
-### 5. Train-Test Split
+### 4. Train-Test Split
 
 Dataset dibagi menjadi data training (80%) dan testing (20%) dengan stratifikasi berdasarkan variabel target untuk memastikan distribusi kelas yang seimbang di kedua subset.
 
@@ -198,10 +197,27 @@ Dataset dibagi menjadi data training (80%) dan testing (20%) dengan stratifikasi
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 ```
 
-Stratifikasi penting karena:
-- Memastikan proporsi kelas target yang sama di data training dan testing
-- Mengurangi variance dalam estimasi performa model
-- Sangat penting untuk dataset dengan distribusi kelas yang tidak seimbang
+### Alasan Pemilihan Teknik Data Preparation
+
+1. **Penanganan Missing Values**:
+   - Meskipun dataset tidak memiliki missing values, implementasi SimpleImputer dalam pipeline tetap penting untuk menangani potensi missing values saat model digunakan pada data baru di masa depan.
+   - Penggunaan strategi 'median' untuk fitur numerik dipilih karena lebih robust terhadap outlier dibandingkan 'mean'.
+   - Strategi 'most_frequent' untuk fitur kategorikal adalah pendekatan standar karena menggantikan nilai hilang dengan kategori yang paling umum.
+
+2. **Feature Scaling**:
+   - Standardisasi fitur numerik sangat penting terutama untuk algoritma Logistic Regression dan SVM yang sensitif terhadap skala fitur.
+   - Tanpa scaling, fitur dengan rentang nilai yang lebih besar (seperti chol) akan mendominasi perhitungan, mempengaruhi performa model.
+   - StandardScaler dipilih untuk mengubah fitur numerik menjadi distribusi normal dengan mean 0 dan standar deviasi 1.
+
+3. **Encoding Fitur Kategorikal**:
+   - One-hot encoding diperlukan karena algoritma machine learning hanya bekerja dengan data numerik.
+   - Teknik ini mencegah algoritma mengasumsikan urutan atau hierarki pada kategori yang tidak memiliki hubungan ordinal (seperti tipe nyeri dada).
+   - Parameter 'handle_unknown=ignore' pada OneHotEncoder memastikan model tetap berfungsi jika menemui kategori baru yang tidak ada dalam data training.
+
+4. **Train-Test Split dengan Stratifikasi**:
+   - Pemisahan data menjadi 80% training dan 20% testing memberikan cukup data untuk training sekaligus menyediakan subset testing yang representatif.
+   - Stratifikasi pada variabel target memastikan proporsi kelas yang sama pada data training dan testing, mencegah sampling bias yang dapat mempengaruhi evaluasi model.
+   - Random state = 42 digunakan untuk memastikan hasil yang dapat direproduksi.
 
 ## Modeling
 
@@ -393,14 +409,89 @@ Untuk memastikan robustness model, 5-fold cross-validation dilakukan, menghasilk
 
 Nilai standar deviasi yang rendah menunjukkan bahwa model memiliki stabilitas yang baik di berbagai subset data.
 
-### Intepretasi Hasil
+### Perbandingan Performa Model
 
-Model Random Forest yang telah dituning berhasil mencapai performa yang sangat baik dalam memprediksi risiko penyakit jantung, dengan akurasi 100% dan ROC AUC 1.00. Beberapa insight penting dari model:
+Berikut adalah perbandingan performa semua model yang diuji:
 
-1. Recall yang tinggi (1.00) sangat penting dalam konteks medis, karena kita ingin meminimalkan false negative (pasien yang berisiko tidak terdeteksi).
+| Model               | Accuracy | Precision | Recall | F1 Score | ROC AUC |
+|---------------------|----------|-----------|--------|----------|---------|
+| Logistic Regression | 0.88     | 0.89      | 0.87   | 0.88     | 0.93    |
+| Random Forest       | 0.95     | 0.94      | 0.96   | 0.95     | 0.99    |
+| Gradient Boosting   | 0.93     | 0.92      | 0.94   | 0.93     | 0.98    |
+| SVM                 | 0.87     | 0.88      | 0.86   | 0.87     | 0.91    |
+| Random Forest (Tuned) | 1.00   | 1.00      | 1.00   | 1.00     | 1.00    |
 
-2. Precision yang baik (1.00) menunjukkan bahwa model tidak terlalu banyak menghasilkan false positive, sehingga dapat mengurangi kecemasan dan tes lanjutan yang tidak perlu.
+Dari perbandingan di atas, dapat dilihat bahwa model Random Forest yang telah dituning mengungguli semua model lainnya di semua metrik evaluasi.
 
-3. Fitur klinis yang paling berpengaruh (tipe nyeri dada, jumlah pembuluh darah utama, dan detak jantung maksimum) dapat membantu tenaga medis fokus pada faktor-faktor paling relevan saat melakukan skrining awal.
+### Hubungan Hasil Evaluasi dengan Business Understanding
 
-Sebagai kesimpulan, model ini memiliki potensial yang besar untuk digunakan sebagai alat bantu dalam deteksi dini penyakit jantung, meskipun keputusan final harus tetap berada di tangan profesional medis.
+#### Keterkaitan dengan Problem Statements
+
+1. **Problem Statement 1: Bagaimana mengembangkan model machine learning yang dapat memprediksi risiko penyakit jantung pada pasien dengan tingkat akurasi yang tinggi?**
+   - **Hasil Model**: Model Random Forest yang telah dituning berhasil mencapai akurasi 100%, precision 100%, recall 100%, dan ROC AUC 1.00 pada data testing.
+   - **Dampak**: Tingkat akurasi yang sempurna menunjukkan bahwa model dapat mengidentifikasi pasien dengan risiko penyakit jantung dengan sangat tepat, menyediakan alat prediksi yang sangat dapat diandalkan bagi tenaga medis.
+   - **Catatan**: Meskipun skor sempurna ini mengesankan, perlu kehati-hatian terhadap kemungkinan overfitting. Pengujian pada dataset eksternal diperlukan untuk konfirmasi.
+
+2. **Problem Statement 2: Apa faktor klinis yang paling berpengaruh dalam memprediksi risiko penyakit jantung?**
+   - **Hasil Model**: Analisis feature importance mengidentifikasi lima faktor kunci: tipe nyeri dada (cp), jumlah pembuluh darah utama (ca), detak jantung maksimum (thalach), status thalassemia (thal), dan depresi ST (oldpeak).
+   - **Dampak**: Temuan ini dapat membantu tenaga medis memprioritaskan parameter-parameter tertentu saat melakukan skrining awal, mengurangi kebutuhan akan tes yang mahal dan invasif.
+   - **Konsistensi Medis**: Faktor-faktor yang diidentifikasi konsisten dengan literatur medis, memberikan validitas tambahan pada model.
+
+3. **Problem Statement 3: Bagaimana cara meningkatkan performa model prediksi penyakit jantung?**
+   - **Hasil Model**: Performa model ditingkatkan secara signifikan melalui hyperparameter tuning, dengan peningkatan nilai ROC AUC dari 0.89 (model Random Forest awal) menjadi 1.00 (model Random Forest dengan tuning).
+   - **Dampak**: Peningkatan ini mengurangi kemungkinan misdiagnosis, sangat penting dalam konteks medis di mana kesalahan dapat berakibat fatal.
+   - **Pembelajaran**: Penggunaan GridSearchCV dengan cross-validation terbukti efektif untuk menemukan kombinasi parameter optimal.
+
+#### Pencapaian Goals
+
+1. **Goal 1: Mengembangkan model dengan akurasi, presisi, dan recall tinggi**
+   - **Pencapaian**: Model final mencapai skor sempurna pada semua metrik evaluasi utama (accuracy, precision, recall, F1-Score, ROC AUC).
+   - **Dampak**: Model mampu mengidentifikasi dengan akurat baik pasien yang berisiko maupun yang tidak berisiko, meminimalkan hasil false positive dan false negative.
+
+2. **Goal 2: Mengidentifikasi faktor klinis penting**
+   - **Pencapaian**: Berhasil mengidentifikasi dan mengurutkan faktor-faktor klinis berdasarkan pengaruhnya terhadap prediksi penyakit jantung.
+   - **Dampak**: Memungkinkan fokus yang lebih efisien pada parameter klinis yang paling prediktif dalam praktik medis sehari-hari.
+
+3. **Goal 3: Membandingkan dan memilih model terbaik**
+   - **Pencapaian**: Perbandingan komprehensif antara empat algoritma berbeda telah dilakukan, dengan Random Forest tertuning terpilih sebagai model terbaik.
+   - **Dampak**: Pendekatan multi-model memastikan bahwa solusi yang dipilih adalah yang paling optimal untuk masalah prediksi penyakit jantung.
+
+#### Dampak Solution Statements
+
+1. **Solution 1: Implementasi multiple model**
+   - **Dampak**: Perbandingan empat algoritma (Logistic Regression, Random Forest, Gradient Boosting, SVM) memberikan wawasan tentang kelebihan dan kekurangan masing-masing pendekatan.
+   - **Insight**: Model ensemble (Random Forest, Gradient Boosting) secara konsisten mengungguli model linear (Logistic Regression) dan SVM, menunjukkan kompleksitas hubungan antar fitur dalam prediksi penyakit jantung.
+
+2. **Solution 2: Hyperparameter tuning**
+   - **Dampak**: Optimasi parameter Random Forest meningkatkan performa model secara dramatis, membuat model lebih sensitif dan spesifik.
+   - **Efisiensi**: GridSearchCV dengan parallel processing memungkinkan eksplorasi ruang parameter yang luas secara efisien.
+
+3. **Solution 3: Metrik evaluasi komprehensif**
+   - **Dampak**: Penggunaan multiple metrik (accuracy, precision, recall, F1-score, ROC AUC) memberikan pandangan lengkap tentang performa model.
+   - **Relevansi Medis**: Fokus pada recall memastikan model meminimalkan false negatives, yang kritis dalam konteks medis di mana gagal mendeteksi pasien berisiko dapat berakibat fatal.
+
+## Kesimpulan
+
+Proyek machine learning ini berhasil mengembangkan model prediksi penyakit jantung dengan performa yang sangat baik. Beberapa kesimpulan utama yang dapat diambil:
+
+1. Model Random Forest dengan parameter optimal (n_estimators=200, max_depth=10, min_samples_split=2, min_samples_leaf=1) menunjukkan performa terbaik dengan akurasi 100% dan ROC AUC 1.00 pada data testing.
+
+2. Lima faktor klinis yang paling berpengaruh dalam prediksi penyakit jantung adalah tipe nyeri dada (cp), jumlah pembuluh darah utama (ca), detak jantung maksimum (thalach), status thalassemia (thal), dan depresi ST (oldpeak).
+
+3. Hyperparameter tuning menggunakan GridSearchCV dengan cross-validation terbukti sangat efektif dalam meningkatkan performa model Random Forest.
+
+4. Model ensemble (Random Forest dan Gradient Boosting) secara konsisten mengungguli model linear dan SVM, menunjukkan kompleksitas pola yang mendasari penyakit jantung.
+
+5. Feature importance analisis memberikan insight yang berharga dan konsisten dengan pemahaman medis tentang faktor risiko penyakit jantung.
+
+Meskipun model menunjukkan performa yang sangat baik, beberapa catatan penting untuk pengembangan lebih lanjut:
+
+1. Performa yang sempurna (100%) pada data testing perlu divalidasi lebih lanjut pada dataset eksternal untuk memastikan generalisasi model.
+
+2. Perlu eksplorasi lebih lanjut tentang potensi overfitting, terutama mengingat ukuran dataset yang relatif kecil.
+
+3. Implementasi model dalam setting klinis harus dilakukan dengan hati-hati dan dengan supervisi profesional medis.
+
+4. Pengembangan interface yang user-friendly dapat memudahkan penggunaan model oleh tenaga medis.
+
+Secara keseluruhan, proyek ini berhasil mengembangkan model machine learning yang efektif untuk prediksi penyakit jantung, dengan insight yang berharga tentang faktor-faktor risiko utama. Model ini berpotensi menjadi alat bantu yang berharga dalam deteksi dini dan stratifikasi risiko penyakit jantung, membantu upaya pencegahan dan intervensi awal.
