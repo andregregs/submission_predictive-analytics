@@ -118,13 +118,13 @@ Untuk memahami lebih dalam tentang dataset, dilakukan beberapa analisis eksplora
 
 #### 1. Distribusi Kelas Target
 
-![Distribusi Kelas Target](/images/target_distribution.png)
+![Distribusi Kelas Target](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/target_distribution.png)
 
 Dari visualisasi di atas, dapat diamati bahwa distribusi kelas dalam dataset cukup seimbang, dengan sekitar 51.3% pasien didiagnosis dengan penyakit jantung (kelas 1) dan 48.7% tidak memiliki penyakit jantung (kelas 0). Keseimbangan ini baik untuk model klasifikasi karena mengurangi risiko bias dalam prediksi.
 
 #### 2. Korelasi Antar Fitur
 
-![Korelasi Antar Fitur](/images/correlation_matrix.png)
+![Korelasi Antar Fitur](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/correlation_matrix.png)
 
 Dari matriks korelasi, beberapa insight penting yang diperoleh:
 - Terdapat korelasi negatif yang kuat antara `thalach` (detak jantung maksimum) dan `age` (usia), menunjukkan bahwa detak jantung maksimum cenderung menurun dengan bertambahnya usia.
@@ -134,7 +134,7 @@ Dari matriks korelasi, beberapa insight penting yang diperoleh:
 
 #### 3. Distribusi Fitur Numerik Berdasarkan Target
 
-![Distribusi Fitur Numerik](/images/numeric_distributions.png)
+![Distribusi Fitur Numerik](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/numeric_distributions.png)
 
 Analisis distribusi fitur numerik berdasarkan target menunjukkan beberapa pola:
 - Pasien dengan penyakit jantung cenderung memiliki usia yang lebih tinggi, meskipun perbedaannya tidak terlalu mencolok.
@@ -144,7 +144,7 @@ Analisis distribusi fitur numerik berdasarkan target menunjukkan beberapa pola:
 
 #### 4. Analisis Fitur Kategorikal
 
-![Analisis Fitur Kategorikal](/images/categorical_distributions.png)
+![Analisis Fitur Kategorikal](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/categorical_distributions.png)
 
 Analisis fitur kategorikal memberikan insight berikut:
 - Pria (sex=1) memiliki prevalensi penyakit jantung yang lebih tinggi dibandingkan wanita dalam dataset ini, yang sesuai dengan statistik epidemiologi.
@@ -392,7 +392,7 @@ Untuk mengevaluasi performa model dalam memprediksi penyakit jantung, beberapa m
 
 ### 1. Confusion Matrix
 
-![Confusion Matrix](/images/confusion_matrix_random_forest_(tuned).png)
+![Confusion Matrix](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/confusion_matrix_random_forest_(tuned).png)
 
 Confusion matrix memberikan gambaran visual tentang prediksi model dibandingkan dengan nilai sebenarnya:
 - True Positive (TP): Jumlah pasien dengan penyakit jantung yang diprediksi benar
@@ -414,7 +414,7 @@ Berikut adalah hasil evaluasi model Random Forest yang telah dituning:
 
 ### 3. ROC Curve
 
-![ROC Curve](/images/roc_comparison.png)
+![ROC Curve](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/roc_comparison.png)
 
 ROC Curve (Receiver Operating Characteristic Curve) memplot True Positive Rate (Sensitivity) terhadap False Positive Rate (1-Specificity) pada berbagai threshold. Area Under the Curve (AUC) mengukur kemampuan model untuk membedakan antara kelas positif dan negatif, dengan nilai dari 0.5 (tidak lebih baik dari random) hingga 1.0 (sempurna).
 
@@ -422,7 +422,7 @@ Model Random Forest final mencapai AUC 1.0, menunjukkan kemampuan diskriminasi y
 
 ### 4. Feature Importance
 
-![Feature Importance](/images/feature_importance.png)
+![Feature Importance](https://github.com/andregregs/submission_predictive-analytics/blob/main/images/feature_importance.png)
 
 Analisis feature importance dari model Random Forest menunjukkan bahwa lima fitur teratas yang berkontribusi pada prediksi penyakit jantung adalah:
 1. **cp** (tipe nyeri dada): 0.25
